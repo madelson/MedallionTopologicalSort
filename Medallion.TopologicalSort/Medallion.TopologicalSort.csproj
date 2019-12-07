@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Authors>Michael Adelson</Authors>
+    <Copyright>Copyright © 2019 Michael Adelson</Copyright>
+    <RootNamespace>Medallion.Collections</RootNamespace>
+
+    <PackageId>Medallion.TopologicalSort</PackageId>
+    <Description>TODO</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>TODO</PackageTags>
+    <PackageProjectUrl>TODO</PackageProjectUrl>
+    <PackageReleaseNotes>See TODO#release-notes</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <NoWarn>1591</NoWarn>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+</Project>
