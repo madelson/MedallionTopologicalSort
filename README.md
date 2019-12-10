@@ -1,6 +1,6 @@
 # MedallionTopologicalSort
 
-MedallionTopologicalSort is a fast implementation of topological sorting for .NET that supports stable sorting as well as breaking ties via `ThenBy[Descending]`.
+MedallionTopologicalSort is a fast implementation of [topological sorting](https://en.wikipedia.org/wiki/Topological_sorting) for .NET that supports stable sorting as well as breaking ties via `ThenBy[Descending]`.
 
 MedallionTopologicalSort is available for download as a [NuGet package](https://www.nuget.org/packages/Medallion.TopologicalSort). [![NuGet Status](http://img.shields.io/nuget/v/Medallion.TopologicalSort.svg?style=flat)](https://www.nuget.org/packages/Medallion.TopologicalSort/)
 
@@ -21,7 +21,7 @@ using Medallion.Collections;
 
 var shuffledInts = Enumerable.Range(0, 10).OrderBy(_ => Guid.NewGuid());
 
-var sortedInts.OrderByTopologically(getDependencies: i => i > 0 ? new[] { i - 1 } : Enumerable.Empty<int>());
+var sortedInts = shuffledInts.OrderByTopologically(getDependencies: i => i > 0 ? new[] { i - 1 } : Enumerable.Empty<int>());
 
 Console.WriteLine(string.Join(", ", sortedInts)); // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 ```
@@ -65,17 +65,18 @@ The library makes an effort to handle edge-cases well and logically, for example
 * Dependency cycles (e. g. a depends on b depends on a) are detected and will result in an `InvalidOperationException` as the output sequence is enumerated.
 * Invalid dependencies (e. g. a depends on x but x is not in the source enumerable) are detected and will result in an `InvalidOperationException` as the output sequence is enumerated.
 * An optional `comparer` argument of type `IEqualityComparer<T>` can be provided to specify how items in the sequence are matched against dependency items.
-* Duplicates are allowed in the source sequence. In the case of duplicates (as defined by `comparer`), `getDependencies` will only be evaluated once for the item, and the resulting sequence will contain the same exact items as the source sequence.
+* Duplicates (as defined by `comparer`) are allowed in the source sequence. In the case of duplicates, `getDependencies` will only be evaluated once for the item, and the resulting sequence will contain the same exact items as the source sequence.
 * Duplicates can be returned by `getDependencies`; they have no effect on the algorithm (e. g. if a depends on b twice, it won't affect the sort).
 * `null`s are allowed both in the source sequence and as dependencies.
 
 ### Performance
 
-Performance is a focus of the library. The core topological sort algorithm is O(V + E), where V is the number of vertices (items in the source enumerable) and E is the number of edges (dependencies across all items). For stable or thenby sorts, the worst case is O(Vlog(V) + E), since at worst we have no edges and end up applying an O(Nlog(N)) sort to the entire sequence. In practice, though, it will often be closer to V + E. In addition to employing efficient algorithms, the library makes an effort to minimize allocations and other "overhead".
+Performance is a focus of the library. The core topological sort algorithm is O(V + E), where V is the number of vertices (items in the source enumerable) and E is the number of edges (dependencies across all items). For stable or `ThenBy` sorts, the worst case is O(Vlog(V) + E), since at worst we have no edges and end up applying an O(Nlog(N)) sort to the entire sequence. In practice, though, it will often be closer to V + E. In addition to employing efficient algorithms, the library makes an effort to minimize allocations and other "overhead".
 
-Here is the results of a BenchmarkDotNet comparison of MedallionTopologicalSort against two other topological sorting libraries available on NuGet. As always with micro benchmarks, your particular usage pattern may yield different results:
+Here is the results of a [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet) comparison of MedallionTopologicalSort against two other topological sorting libraries available on NuGet. As always with micro benchmarks, your particular usage pattern may yield different results:
 
 | Library | Mean (smaller is better) | StdDev | Ratio (smaller is better) |
+| ----------- | ----------- | ----------- | ----------- |
 | MedallionTopologicalSort | 37.07 us | 0.139 us | 1.0.0 |
 | [TopologicalSort](https://www.nuget.org/packages/TopologicalSort/) | 94.94 us | 0.318 us | 2.56 |
 | [TopologicalSorting](https://www.nuget.org/packages/TopologicalSorting/) | 267.58 us | 16.923 us | 7.22 |
