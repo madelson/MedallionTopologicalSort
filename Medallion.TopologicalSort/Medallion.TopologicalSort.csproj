@@ -16,11 +16,11 @@
     <RootNamespace>Medallion.Collections</RootNamespace>
 
     <PackageId>Medallion.TopologicalSort</PackageId>
-    <Description>TODO</Description>
+    <Description>A fast implementation of topological sorting that supports stable sorting as well as breaking ties via ThenBy[Descending]</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>TODO</PackageTags>
-    <PackageProjectUrl>TODO</PackageProjectUrl>
-    <PackageReleaseNotes>See TODO#release-notes</PackageReleaseNotes>
+    <PackageTags>enumerable collections topological sort sorting stable</PackageTags>
+    <PackageProjectUrl>https://github.com/madelson/MedallionTopologicalSort</PackageProjectUrl>
+    <PackageReleaseNotes>See https://github.com/madelson/MedallionTopologicalSort#release-notes</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
