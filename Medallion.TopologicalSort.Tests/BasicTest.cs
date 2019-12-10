@@ -206,5 +206,17 @@ namespace Medallion.TopologicalSort.Tests
                 result
             );
         }
+
+        [Test]
+        public void TestNullItems()
+        {
+            var items = new[] { "a", "b", "c", null };
+            var result = items.OrderTopologicallyBy(
+                    s => s != null ? new[] { default(string) } : Enumerable.Empty<string>()
+                )
+                .ThenByDescending(s => s)
+                .ToArray();
+            CollectionAssert.AreEqual(new[] { null, "c", "b", "a" }, result);
+        }
     }
 }
