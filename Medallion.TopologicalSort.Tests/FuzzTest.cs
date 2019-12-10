@@ -135,7 +135,9 @@ namespace Medallion.TopologicalSort.Tests
             for (var i = 0; i < items.Length; ++i)
             {
                 // copy to ensure unique object identity. This is helpful for stability testing
+#pragma warning disable CS0618 // Type or member is obsolete
                 items[i] = string.Copy(random.Next(items.Length).ToString());
+#pragma warning restore CS0618 // Type or member is obsolete
             }
 
             var edgeCount = random.Next(0, (items.Length * items.Length) / 2);
