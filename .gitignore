@@ -40,6 +40,7 @@ UpgradeLog.*
 _ReSharper*/
 [Tt]est[Rr]esult*
 *.dotCover
+BenchmarkDotNet.Artifacts/
 
 #StyleCop
 StyleCop.Cache
