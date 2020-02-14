@@ -32,7 +32,7 @@ namespace Medallion.Collections
             this IEnumerable<TSource> source, 
             Func<TSource, IEnumerable<TSource>> getDependencies, 
             IEqualityComparer<TSource>? comparer = null) =>
-            new SimpleTopologicallyOrderedEnumerable<TSource>(
+            new TopologicallySortedOrderedEnumerable<TSource>(
                 source ?? throw new ArgumentNullException(nameof(source)),
                 getDependencies ?? throw new ArgumentNullException(nameof(getDependencies)),
                 comparer ?? EqualityComparer<TSource>.Default
@@ -60,7 +60,7 @@ namespace Medallion.Collections
             this IEnumerable<TSource> source, 
             Func<TSource, IEnumerable<TSource>> getDependencies, 
             IEqualityComparer<TSource>? comparer = null) =>
-            new StableTopologicallyOrderedEnumerable<TSource>(
+            new StableTopologicallySortedEnumerable<TSource>(
                 source ?? throw new ArgumentNullException(nameof(source)),
                 getDependencies ?? throw new ArgumentNullException(nameof(getDependencies)),
                 comparer ?? EqualityComparer<TSource>.Default

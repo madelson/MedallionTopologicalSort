@@ -55,12 +55,15 @@ namespace Medallion.TopologicalSort.Tests
         public void TestStable()
         {
             var items = new[] { 'a', 'b', 'c', 'd', 'e' };
-            var result = items.StableOrderTopologicallyBy(ch => ch switch { 'a' => new[] { 'd' }, 'c' => new[] { 'e' }, _ => Enumerable.Empty<char>() })
-                .ToArray();
+            var stableEnumerable = items.StableOrderTopologicallyBy(ch => ch switch { 'a' => new[] { 'd' }, 'c' => new[] { 'e' }, _ => Enumerable.Empty<char>() });
+            var result = stableEnumerable.ToArray();
             CollectionAssert.AreEqual(
                 new[] { 'b', 'd', 'a', 'e', 'c' },
                 result
             );
+
+            // ordered enumerables support ThenBy(), but a stable enumerable fully describes the ordering and as such it is not desirable/meaningful to support this
+            Assert.IsNotInstanceOf<IOrderedEnumerable<char>>(stableEnumerable, "stable enumerable should not be castable to ordered enumerable");
         }
 
         [Test]

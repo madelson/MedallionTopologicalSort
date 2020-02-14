@@ -1,28 +1,24 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Medallion.Collections
 {
-    internal abstract class TopologicallyOrderedEnumerable<TElement> : IOrderedEnumerable<TElement>
+    /// <summary>
+    /// Contains the actual topological sort algorithm
+    /// </summary>
+    internal static class TopologicalSorter
     {
-        public abstract IEnumerable<TElement> GetSource();
-        public abstract IEqualityComparer<ValueTuple<TElement>> GetItemComparer();
-        public abstract Func<TElement, IEnumerable<TElement>> GetGetDependencies();
-        public abstract Func<int, int, bool> CreateIndexComparison(IReadOnlyList<TElement> items, Func<int, int, bool>? next);
-        public abstract IQueue CreateQueue(IReadOnlyList<TElement> items);
-
-        public IEnumerator<TElement> GetEnumerator()
+        public static IEnumerator<TElement> TopologicalSort<TElement>(ITopologicalSortProvider<TElement> provider)
         {
             // setup
 
-            var items = this.GetSource().ToList();
+            var items = provider.GetSource().ToList();
 
-            var itemsToIndices = new Dictionary<ValueTuple<TElement>, int>(this.GetItemComparer());
+            var itemsToIndices = new Dictionary<ValueTuple<TElement>, int>(provider.GetItemComparer());
             Dictionary<int, List<int>>? duplicates = null;
-            for (var i = 0; i < items.Count; ++i) 
+            for (var i = 0; i < items.Count; ++i)
             {
                 var itemKey = new ValueTuple<TElement>(items[i]);
                 if (itemsToIndices.TryGetValue(itemKey, out var existingIndex))
@@ -43,8 +39,8 @@ namespace Medallion.Collections
             var incomingDependencyIndexLinkedLists = new List<(int dependencyIndex, int next)>();
             var dependencyInfo = new (int dependencyCount, int incomingDependencyIndexLinkedListHead)[items.Count];
             for (var i = 0; i < dependencyInfo.Length; ++i) { dependencyInfo[i].incomingDependencyIndexLinkedListHead = -1; };
-            var yieldableIndices = this.CreateQueue(items);
-            var getDependencies = this.GetGetDependencies();
+            var yieldableIndices = provider.CreateQueue(items);
+            var getDependencies = provider.GetGetDependencies();
             foreach (var i in itemsToIndices.Values)
             {
                 foreach (var dependency in getDependencies(items[i]) ?? throw SortError(nameof(getDependencies) + " may not return null"))
@@ -106,16 +102,18 @@ namespace Medallion.Collections
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-
         private static Exception SortError(string message) => new InvalidOperationException("Unable to complete topological sort: " + message);
 
-        public IOrderedEnumerable<TElement> CreateOrderedEnumerable<TKey>(Func<TElement, TKey> keySelector, IComparer<TKey>? comparer, bool descending)
+        public static IOrderedEnumerable<TElement> CreateOrderedEnumerable<TElement, TKey>(
+            IThenByTopologicalSortProvider<TElement> provider, 
+            Func<TElement, TKey> keySelector, 
+            IComparer<TKey>? comparer, 
+            bool descending)
         {
             if (keySelector == null) { throw new ArgumentNullException(nameof(keySelector)); }
 
-            return new ThenByTopologicallyOrderedEnumerable<TElement, TKey>(
-                this,
+            return new ThenByTopologicallySortedOrderedEnumerable<TElement, TKey>(
+                provider,
                 keySelector,
                 comparer,
                 descending

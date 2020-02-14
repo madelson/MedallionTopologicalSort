@@ -1,18 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Medallion.Collections
 {
-    internal sealed class ThenByTopologicallyOrderedEnumerable<TElement, TKey> : TopologicallyOrderedEnumerable<TElement>
+    /// <summary>
+    /// Implements a secondary sort on top of a topological sort
+    /// </summary>
+    internal sealed class ThenByTopologicallySortedOrderedEnumerable<TElement, TKey> : IThenByTopologicalSortProvider<TElement>, IOrderedEnumerable<TElement>
     {
-        private readonly TopologicallyOrderedEnumerable<TElement> _source;
+        private readonly IThenByTopologicalSortProvider<TElement> _source;
         private readonly Func<TElement, TKey> _keySelector;
         private readonly IComparer<TKey> _keyComparer;
         private readonly bool _descending;
 
-        public ThenByTopologicallyOrderedEnumerable(
-            TopologicallyOrderedEnumerable<TElement> source,
+        public ThenByTopologicallySortedOrderedEnumerable(
+            IThenByTopologicalSortProvider<TElement> source,
             Func<TElement, TKey> keySelector,
             IComparer<TKey>? keyComparer,
             bool descending)
@@ -23,7 +28,7 @@ namespace Medallion.Collections
             this._descending = descending;
         }
 
-        public override Func<int, int, bool> CreateIndexComparison(IReadOnlyList<TElement> items, Func<int, int, bool>? next)
+        public Func<int, int, bool> CreateIndexComparison(IReadOnlyList<TElement> items, Func<int, int, bool>? next)
         {
             (TKey key, bool initialized)[]? keys = null;
 
@@ -59,13 +64,20 @@ namespace Medallion.Collections
             }
         }
 
-        public override IQueue CreateQueue(IReadOnlyList<TElement> items) => 
+        IOrderedEnumerable<TElement> IOrderedEnumerable<TElement>.CreateOrderedEnumerable<TKey1>(Func<TElement, TKey1> keySelector, IComparer<TKey1> comparer, bool descending) =>
+            TopologicalSorter.CreateOrderedEnumerable(this, keySelector, comparer, descending);
+
+        IQueue ITopologicalSortProvider<TElement>.CreateQueue(IReadOnlyList<TElement> items) =>
             new PriorityQueue(this._source.CreateIndexComparison(items, next: this.CreateIndexComparison(items, next: null)), maxCapacity: items.Count);
 
-        public override Func<TElement, IEnumerable<TElement>> GetGetDependencies() => this._source.GetGetDependencies();
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        public override IEqualityComparer<ValueTuple<TElement>> GetItemComparer() => this._source.GetItemComparer();
+        public IEnumerator<TElement> GetEnumerator() => TopologicalSorter.TopologicalSort(this);
 
-        public override IEnumerable<TElement> GetSource() => this._source.GetSource();
+        Func<TElement, IEnumerable<TElement>> ITopologicalSortProvider<TElement>.GetGetDependencies() => this._source.GetGetDependencies();
+
+        IEqualityComparer<ValueTuple<TElement>> ITopologicalSortProvider<TElement>.GetItemComparer() => this._source.GetItemComparer();
+
+        IEnumerable<TElement> ITopologicalSortProvider<TElement>.GetSource() => this._source.GetSource();
     }
 }
