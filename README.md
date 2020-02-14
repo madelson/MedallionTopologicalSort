@@ -2,7 +2,7 @@
 
 MedallionTopologicalSort is a fast implementation of [topological sorting](https://en.wikipedia.org/wiki/Topological_sorting) for .NET that supports stable sorting as well as breaking ties via `ThenBy[Descending]`.
 
-MedallionTopologicalSort is available for download as a [NuGet package](https://www.nuget.org/packages/Medallion.TopologicalSort). [![NuGet Status](http://img.shields.io/nuget/v/Medallion.TopologicalSort.svg?style=flat)](https://www.nuget.org/packages/Medallion.TopologicalSort/)
+MedallionTopologicalSort is available for download as a [NuGet package](https://www.nuget.org/packages/MedallionTopologicalSort). [![NuGet Status](http://img.shields.io/nuget/v/MedallionTopologicalSort.svg?style=flat)](https://www.nuget.org/packages/MedallionTopologicalSort/)
 
 [Release notes](#release-notes)
 

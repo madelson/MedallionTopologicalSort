@@ -4,10 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Medallion.Collections;
 using BenchmarkDotNet.Attributes;
 
-namespace Medallion.TopologicalSort.Benchmarks
+namespace Medallion.Collections.Benchmarks
 {
     [ShortRunJob]
     public class Benchmarks

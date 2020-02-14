@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Medallion.Collections;
 
-namespace Medallion.TopologicalSort.Tests
+namespace Medallion.Collections.Tests
 {
     public class BasicTest
     {

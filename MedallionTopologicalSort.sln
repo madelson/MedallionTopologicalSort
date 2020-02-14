@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medallion.TopologicalSort", "Medallion.TopologicalSort\Medallion.TopologicalSort.csproj", "{73823CA8-F07D-4D42-90EE-E40BB7AF9BBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedallionTopologicalSort", "MedallionTopologicalSort\MedallionTopologicalSort.csproj", "{73823CA8-F07D-4D42-90EE-E40BB7AF9BBB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medallion.TopologicalSort.Tests", "Medallion.TopologicalSort.Tests\Medallion.TopologicalSort.Tests.csproj", "{1FFF92B1-B6F7-4AE4-96A9-27B2728ABE1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedallionTopologicalSort.Tests", "MedallionTopologicalSort.Tests\MedallionTopologicalSort.Tests.csproj", "{1FFF92B1-B6F7-4AE4-96A9-27B2728ABE1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medallion.TopologicalSort.Benchmarks", "Medallion.TopologicalSort.Benchmarks\Medallion.TopologicalSort.Benchmarks.csproj", "{CD464826-3EF0-4F07-B65D-ED19BA7BCC69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedallionTopologicalSort.Benchmarks", "MedallionTopologicalSort.Benchmarks\MedallionTopologicalSort.Benchmarks.csproj", "{CD464826-3EF0-4F07-B65D-ED19BA7BCC69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

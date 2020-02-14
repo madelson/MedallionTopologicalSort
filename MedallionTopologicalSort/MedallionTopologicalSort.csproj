@@ -15,7 +15,7 @@
     <Copyright>Copyright © 2019 Michael Adelson</Copyright>
     <RootNamespace>Medallion.Collections</RootNamespace>
 
-    <PackageId>Medallion.TopologicalSort</PackageId>
+    <PackageId>MedallionTopologicalSort</PackageId>
     <Description>A fast implementation of topological sorting that supports stable sorting as well as breaking ties via ThenBy[Descending]</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>enumerable collections topological sort sorting stable</PackageTags>

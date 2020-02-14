@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>8.0</LangVersion>
+    <RootNamespace>Medallion.Collections.Benchmarks</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -20,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Medallion.TopologicalSort\Medallion.TopologicalSort.csproj" />
+    <ProjectReference Include="..\MedallionTopologicalSort\MedallionTopologicalSort.csproj" />
   </ItemGroup>
 
 </Project>
