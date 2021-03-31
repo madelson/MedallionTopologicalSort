@@ -77,7 +77,7 @@ Here is the results of a [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDo
 
 | Library | Mean (smaller is better) | StdDev | Ratio (smaller is better) |
 | ----------- | ----------- | ----------- | ----------- |
-| MedallionTopologicalSort | 37.07 us | 0.139 us | 1.0.0 |
+| MedallionTopologicalSort | 37.07 us | 0.139 us | 1.0 |
 | [TopologicalSort](https://www.nuget.org/packages/TopologicalSort/) | 94.94 us | 0.318 us | 2.56 |
 | [TopologicalSorting](https://www.nuget.org/packages/TopologicalSorting/) | 267.58 us | 16.923 us | 7.22 |
 
