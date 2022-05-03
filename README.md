@@ -12,7 +12,7 @@ MedallionTopologicalSort is available for download as a [NuGet package](https://
 
 The `OrderTopologicallyBy` operation is available as an extension method on `IEnumerable<T>`. The "graph" underlying the sort is defined on-the-fly by providing a function which can be used to map each element to the set of elements it depends on (in the result, an element appears *after* the elements it depends on).
 
-As a toy example, we could use topological sort to perform a normal sort of a range of integers by specifying that each integer has a dependency on the next integer in the sequence.
+As a toy example, we could use topological sort to perform a normal sort of a range of integers by specifying that each integer has a dependency on the prior integer in the sequence.
 
 ```C#
 using Medallion.Collections;
